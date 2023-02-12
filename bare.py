@@ -15,5 +15,9 @@ def git():
     print(["git", *cli_args])
 
 
+def main():
+    pass
+
+
 if __name__ == "__main__":
-    git()
+    main()
