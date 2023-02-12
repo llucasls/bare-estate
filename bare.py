@@ -26,7 +26,17 @@ def git():
 
 
 def main():
-    status = git()
+    status = 0
+
+    try:
+        if cli_args[0] == "init":
+            status = init()
+        else:
+            status = git()
+    except IndexError:
+        print("Error: no command was provided to git", file=sys.stderr)
+        status = 1
+
     return status
 
 
