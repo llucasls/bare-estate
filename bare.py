@@ -7,6 +7,8 @@ end
 import sys
 import subprocess as sp
 
+from config import configs
+
 
 cli_args = sys.argv[1:]
 
