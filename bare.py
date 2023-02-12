@@ -12,12 +12,15 @@ cli_args = sys.argv[1:]
 
 
 def git():
-    print(["git", *cli_args])
+    proc = sp.Popen(["git", *cli_args])
+    proc.communicate()
+    return proc.returncode
 
 
 def main():
-    pass
+    status = git()
+    return status
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
