@@ -1,23 +1,7 @@
 #!/usr/bin/env python
 import sys
-import subprocess as sp
 
-from config import configs
-
-
-cli_args = sys.argv[1:]
-
-
-def init():
-    proc = sp.Popen(["git", *cli_args])
-    proc.communicate()
-    return proc.returncode
-
-
-def git():
-    proc = sp.Popen(["git", *cli_args])
-    proc.communicate()
-    return proc.returncode
+from commands import cli_args, init, git
 
 
 def main():
