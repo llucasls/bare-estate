@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from commands import cli_args, init, git
+from commands import cli_args, log_err, init, git
 
 
 def main():
@@ -12,9 +12,20 @@ def main():
             status = init()
         else:
             status = git()
+
+    except FileNotFoundError:
+        log_err("Error: the repository has not been initialized yet.")
+        log_err("You can create a new repository using the command:\n")
+        log_err("bare init")
+        status = 2
+
+    except TypeError:
+        log_err("Error: the directory found is not a git repository.")
+        status = 3
+
     except IndexError:
-        print("Error: no command was provided to git", file=sys.stderr)
-        status = 1
+        log_err("Error: no command was provided to git")
+        status = 4
 
     return status
 
