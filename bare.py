@@ -23,6 +23,11 @@ def main():
         log_err("Error: the directory found is not a git repository.")
         status = 3
 
+    except NotADirectoryError as error:
+        file = error.filename
+        log_err(f"Error: A file with the name {file} already exists.")
+        status = 3
+
     except IndexError:
         log_err("Error: no command was provided to git")
         status = 4
