@@ -19,8 +19,9 @@ def main():
         log_err("bare init")
         status = 2
 
-    except TypeError:
-        log_err("Error: the directory found is not a git repository.")
+    except TypeError as error:
+        file = error.filename
+        log_err(f"Error: the directory {file} is not a git repository.")
         status = 3
 
     except NotADirectoryError as error:
