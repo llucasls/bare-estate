@@ -1,8 +1,13 @@
 import os
 import sys
 import subprocess as sp
+import errno
 
 from config import configs, HOME
+
+
+class NotARepositoryError(NotADirectoryError):
+    pass
 
 
 cli_args = sys.argv[1:]
@@ -19,9 +24,17 @@ def validate_file_type(file_stats):
     error_message = f"{configs['history_location']} is not a bare repository"
 
     if file_type == "file" and not file_entry.is_file():
-        raise TypeError(error_message)
+        raise NotARepositoryError(
+            errno.ENOTDIR,
+            error_message,
+            configs["history_location"]
+        )
     if file_type == "directory" and not file_entry.is_dir():
-        raise TypeError(error_message)
+        raise NotARepositoryError(
+            errno.ENOTDIR,
+            error_message,
+            configs["history_location"]
+        )
 
 
 def get_file_stats(bare_repo_files):
