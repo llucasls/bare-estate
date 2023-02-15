@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from commands import cli_args, log_err, init, git
+from commands import cli_args, log_err, init, git, NotARepositoryError
 
 
 def main():
@@ -19,9 +19,9 @@ def main():
         log_err("bare init")
         status = 2
 
-    except TypeError as error:
-        file = error.filename
-        log_err(f"Error: the directory {file} is not a git repository.")
+    except NotARepositoryError as error:
+        message = error.strerror
+        log_err(message)
         status = 3
 
     except NotADirectoryError as error:
