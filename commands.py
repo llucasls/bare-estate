@@ -70,6 +70,10 @@ def init():
     return status
 
 
+def clone():
+    pass
+
+
 def git():
     history_dir_exists()
 
