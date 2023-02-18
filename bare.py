@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-from commands import cli_args, log_err, init, git, NotARepositoryError
+from commands import cli_args, log_err, init, clone, git, NotARepositoryError
 
 
 def main():
@@ -10,6 +10,8 @@ def main():
     try:
         if cli_args[0] == "init":
             status = init()
+        elif cli_args[0] == "clone":
+            status = clone()
         else:
             status = git()
 

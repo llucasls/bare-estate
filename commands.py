@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess as sp
 import errno
+import tempfile
 
 from config import configs, HOME
 
@@ -71,7 +72,32 @@ def init():
 
 
 def clone():
-    pass
+    status = 1
+    repository = cli_args[1]
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        clone_cmd = ["git",
+                     "clone",
+                     "--quiet",
+                     f"--separate-git-dir={configs['history_location']}",
+                     repository,
+                     f"{tmp_dir}/dotfiles"]
+
+        rsync_cmd = ["rsync",
+                     "--recursive",
+                     "--verbose",
+                     "--exclude",
+                     ".git",
+                     f"{tmp_dir}/dotfiles/",
+                     f"{HOME}/"]
+
+        config_cmd = [*bare_cmd, "config", "status.showUntrackedFiles", "no"]
+
+        status = sp.run(clone_cmd).returncode
+        status += sp.run(rsync_cmd).returncode
+        status += sp.run(config_cmd).returncode
+
+    return status
 
 
 def git():
