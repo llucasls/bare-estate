@@ -42,7 +42,7 @@ def get_file_stats(bare_repo_files):
     for file in bare_repo_files:
         if file.name in ["HEAD", "config", "description"]:
             stats_list.append([file, "file"])
-        else:
+        elif file.name in ["branches", "hooks", "info", "objects", "refs"]:
             stats_list.append([file, "directory"])
 
     return stats_list
