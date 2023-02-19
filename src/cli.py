@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import sys
 
-from commands import cli_args, log_err, init, clone, git, NotARepositoryError
+try:
+    from src.commands import cli_args, log_err, init, clone, git, NotARepositoryError
+except ImportError:
+    from commands import cli_args, log_err, init, clone, git, NotARepositoryError
 
 
 def main():

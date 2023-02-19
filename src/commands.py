@@ -4,7 +4,10 @@ import subprocess as sp
 import errno
 import tempfile
 
-from config import configs, HOME
+try:
+    from src.config import configs, HOME
+except ImportError:
+    from config import configs, HOME
 
 
 class NotARepositoryError(NotADirectoryError):
