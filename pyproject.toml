@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 [project.scripts]
-estate = "src.cli:main"
+estate = "bare_estate.cli:main"
 
 [project.urls]
 "Homepage" = "https://github.com/llucasls/bare-estate"
