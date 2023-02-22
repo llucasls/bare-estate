@@ -1,5 +1,13 @@
 # Bare Estate
 
+## Install
+
+To install this package from the PyPI, you can use the command:
+
+```sh
+pip install bare-estate
+```
+
 This project was based on a [blog post](https://stegosaurusdormant.com/bare-git-repo/)
 written by Greg Owen, which in turn was based on a
 [post](https://news.ycombinator.com/item?id=11070797) by StreakyCobra on Hacker
