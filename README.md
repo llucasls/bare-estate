@@ -8,6 +8,9 @@ To install this package from the PyPI, you can use the command:
 pip install bare-estate
 ```
 
+The current version has no Python dependencies. However, it requires `git` and
+`rsync` installed locally in order to work.
+
 ## Credits
 
 - Greg Owen, for the [blog post](https://stegosaurusdormant.com/bare-git-repo/)
