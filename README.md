@@ -12,8 +12,10 @@ With Bare Estate you don't need a convoluted strategy for managing your
 dotfiles. You can create a bare repository that will store your repository's
 data. Manage your dotfiles as if they were on a regular repo. Even files from
 your home directory, without actually turning your home into a git repository
-itself. And the best part is the application handles the abstraction for you,
-so you can use it in the same you use git.
+itself.
+
+And the best part is the application handles the abstraction for you,
+so you can use it in the same you use git!
 
 ## Install
 
@@ -23,8 +25,8 @@ To install this package from the PyPI, you can use the command:
 pip install bare-estate
 ```
 
-The current version has no Python dependencies. However, it requires `git` and
-`rsync` installed locally in order to work.
+The current version has no Python dependencies, other than the base install.
+However, it requires `git` and `rsync` installed locally in order to work.
 
 ## Credits
 
