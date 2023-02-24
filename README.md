@@ -48,7 +48,7 @@ TODO: write how to use the estate command
 To install this package from the PyPI, you can use the command:
 
 ```sh
-pip install bare-estate
+pip install -U bare-estate
 ```
 
 The current version has no Python dependencies, other than the base install.
