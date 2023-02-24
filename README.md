@@ -17,6 +17,32 @@ itself.
 And the best part is the application handles the abstraction for you,
 so you can use it in the same you use git!
 
+## Configuration
+
+The configuration is made by by using a json file. The path of the file is
+`${XDG_CONFIG_HOME}/bare_estate.json`. If you didn't set the value of the
+`XDG_CONFIG_HOME` environment variable, then it defaults to
+`${HOME}/.config/bare_estate.json`.
+
+### Config Options:
+
+- history_location: it says where your bare repository directory will be
+located. Environment variables don't expand. So you will have to write the
+complete path of the file.
+
+### Examples:
+
+bare_estate.json:
+```
+{
+  "history_location": "/home/lucas/.dotfiles"
+}
+```
+
+## Usage
+
+TODO: write how to use the estate command
+
 ## Install
 
 To install this package from the PyPI, you can use the command:
