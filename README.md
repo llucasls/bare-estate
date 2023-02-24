@@ -41,7 +41,42 @@ bare_estate.json:
 
 ## Usage
 
-TODO: write how to use the estate command
+The package introduces an executable script called `estate` as the main
+entrypoint for the application. It is used just like you would use git.
+
+### Examples:
+
+- Initialize a new repo:
+```sh
+estate init
+```
+
+- Clone an existing repository:
+```sh
+estate clone <dotfiles-repo-url>
+```
+**Warning**: cloning a repository will overwrite your local files if the remote
+repository has files with the same name.
+
+- Add files to the staging area:
+```sh
+estate add file1 file2 file3
+```
+
+- Check your repository's status:
+```sh
+estate status
+```
+
+- Commit your changes:
+```sh
+estate commit
+```
+
+- Push your changes to the remote repo:
+```sh
+estate push
+```
 
 ## Install
 
