@@ -27,7 +27,7 @@ so you can use it in the same you use git!
 
 ## Configuration
 
-The configuration is made by by using a json file. The path of the file is
+The configuration is made by using a json file. The path of the file is
 `${XDG_CONFIG_HOME}/bare_estate.json`. If you didn't set the value of the
 `XDG_CONFIG_HOME` environment variable, then it defaults to
 `${HOME}/.config/bare_estate.json`.
