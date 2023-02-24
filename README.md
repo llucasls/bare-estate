@@ -1,5 +1,13 @@
 # Bare Estate
 
+## Table of Contents
+
+- [About](#about)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Install](#install)
+- [Credits](#credits)
+
 ## About
 
 Have you ever needed to install a brand new Linux distro or BSD system? Any
