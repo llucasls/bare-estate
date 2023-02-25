@@ -81,6 +81,7 @@ def clone():
     with tempfile.TemporaryDirectory() as tmp_dir:
         clone_cmd = ["git",
                      "clone",
+                     "--bare",
                      "--quiet",
                      f"--separate-git-dir={configs['history_location']}",
                      repository,
