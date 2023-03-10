@@ -1,11 +1,52 @@
 #!/usr/bin/env python
 import sys
 import re
+import argparse
 
 import toml
 
 
-def bump(version: str, bumped_segment=None) -> str:
+class Release(argparse.Namespace):
+    def __init__(self, args):
+        self.file = args.file
+        self.release = args.release
+        self.pre_release = args.alpha or args.beta or args.rc
+
+
+def bump_pre(pre_release, release, option):
+    should_error = (
+        release is None and option == "alpha" and pre_release[0] == "b" or
+        release is None and option == "alpha" and pre_release[0] == "c" or
+        release is None and option == "alpha" and pre_release[:2] == "rc" or
+        release is None and option == "beta" and pre_release[0] == "c" or
+        release is None and option == "beta" and pre_release[:2] == "rc")
+
+    if should_error:
+        print(f"Error: cannot bump to {option} pre-release", file=sys.stderr)
+        sys.exit(1)
+
+    exp = re.compile(r"\D+")
+    _, pre_release_index, *_ = exp.match(pre_release).span()
+
+    pre_letter = pre_release[:pre_release_index]
+    pre_number = pre_release[pre_release_index:]
+    pre_number = 0 if pre_number == "" else int(pre_number)
+
+    should_bump_number = (
+        release is None and option == "alpha" and pre_letter == "a" or
+        release is None and option == "beta" and pre_letter == "b" or
+        release is None and option == "rc" and pre_letter in ["c", "rc"])
+
+    if should_bump_number:
+        pre_number += 1
+    else:
+        pre_number = ""
+        pre_letter = {"alpha": "a", "beta": "b", "rc": "rc"}[option]
+
+    return f"{pre_letter}{pre_number}"
+
+
+def bump(version: str, bumped_release=None, bumped_pre_release=None) -> str:
     data: object = toml.loads(version)
     version_identifier: str = data["version"]
 
@@ -18,18 +59,18 @@ def bump(version: str, bumped_segment=None) -> str:
     size = len(release.split("."))
     major, minor, micro, *_ = map(int, [*release.split("."), 0, 0])
 
-    if bumped_segment == "major":
+    if bumped_release == "major":
         major += 1
         minor = 0
         micro = 0
-        pre_release = ""
-    elif bumped_segment == "minor":
+    elif bumped_release == "minor":
         minor += 1
         micro = 0
-        pre_release = ""
-    elif bumped_segment == "micro" or bumped_segment == "patch":
+    elif bumped_release in ["micro", "patch"]:
         micro += 1
-        pre_release = ""
+
+    if bumped_pre_release in ["alpha", "beta", "rc"]:
+        pre_release = bump_pre(pre_release, bumped_release, bumped_pre_release)
 
     major, minor, micro = map(str, [major, minor, micro])
     release_list = [major, minor, micro]
@@ -55,20 +96,30 @@ def read_file(input_file):
 
 
 def main():
-    try:
-        _, input_file, bumped_segment, *_ = sys.argv
-    except IndexError:
-        sys.exit(1)
+    parser = argparse.ArgumentParser(exit_on_error=False)
+    parser.add_argument("file")
+    parser.add_argument("release", nargs="?")
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-a", "--alpha", action="store_const", const="alpha")
+    group.add_argument("-b", "--beta", action="store_const", const="beta")
+    group.add_argument("-c", "--rc", action="store_const", const="rc")
+
+    args = Release(parser.parse_args())
+
+    input_file = args.file
+    release = args.release
+    pre_release = args.pre_release
 
     content = read_file(input_file)
 
-    get_version = lambda line: line.find("version") != -1
-    has_version = [entry for entry in map(get_version, content)]
+    get_version = lambda line: line.strip().find("version") == 0
+    has_version = list(map(get_version, content))
 
     version_index = has_version.index(True)
     version = content[version_index]
 
-    version = bump(version, bumped_segment)
+    version = bump(version, release, pre_release)
     content[version_index] = version
 
     with open(input_file, "w") as file:
