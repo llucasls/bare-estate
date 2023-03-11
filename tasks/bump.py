@@ -14,6 +14,11 @@ class Release(argparse.Namespace):
 
 
 def bump_pre(pre_release, release, option):
+    if pre_release == "" and release is None:
+        print("Error: cannot turn current version into a pre-release",
+              file=sys.stderr)
+        sys.exit(1)
+
     should_error = (
         release is None and option == "alpha" and pre_release[0] == "b" or
         release is None and option == "alpha" and pre_release[0] == "c" or
