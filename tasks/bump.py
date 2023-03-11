@@ -97,13 +97,17 @@ def read_file(input_file):
 
 def main():
     parser = argparse.ArgumentParser(exit_on_error=False)
-    parser.add_argument("file")
-    parser.add_argument("release", nargs="?")
+    parser.add_argument("file", help="the config file to be changed")
+    parser.add_argument("release", nargs="?",
+                        help="the part of the release to be increased")
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("-a", "--alpha", action="store_const", const="alpha")
-    group.add_argument("-b", "--beta", action="store_const", const="beta")
-    group.add_argument("-c", "--rc", action="store_const", const="rc")
+    group.add_argument("-a", "--alpha", action="store_const", const="alpha",
+                       help="label the new version as an alpha pre-release")
+    group.add_argument("-b", "--beta", action="store_const", const="beta",
+                       help="label the new version as a beta pre-release")
+    group.add_argument("-c", "--rc", action="store_const", const="rc",
+                       help="label the new version as a release candidate")
 
     args = Release(parser.parse_args())
 
