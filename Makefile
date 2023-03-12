@@ -1,5 +1,6 @@
 PYTHON = python
 TWINE = $(PYTHON) -m twine
+PYTEST = $(PYTHON) -m pytest
 
 dist:
 	if ! test -d dist; then \
@@ -18,4 +19,7 @@ publish: build
 clean: | dist
 	rm -rf dist/*
 
-.PHONY: build check publish clean
+test:
+	$(PYTEST)
+
+.PHONY: build check publish clean test
