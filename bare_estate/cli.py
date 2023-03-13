@@ -2,7 +2,7 @@
 import sys
 
 try:
-    from src.commands import cli_args, log_err, init, clone, git, NotARepositoryError
+    from bare_estate.commands import cli_args, log_err, init, clone, git, NotARepositoryError
 except ImportError:
     from commands import cli_args, log_err, init, clone, git, NotARepositoryError
 

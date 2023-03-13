@@ -5,7 +5,7 @@ import errno
 import tempfile
 
 try:
-    from src.config import configs, HOME
+    from bare_estate.config import configs, HOME
 except ImportError:
     from config import configs, HOME
 
