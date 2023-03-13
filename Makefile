@@ -1,6 +1,7 @@
 PYTHON = python
 TWINE = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
+VENV = $(CURDIR)/.venv
 
 dist:
 	if ! test -d dist; then \
@@ -18,6 +19,9 @@ publish: build
 
 clean: | dist
 	rm -rf dist/*
+
+$(VENV):
+	$(PYTHON) -m $(VENV)
 
 test:
 	$(PYTEST)
