@@ -35,4 +35,7 @@ $(VENV): dev_requirements.txt
 test: $(VENV)
 	. $(VENV)/bin/activate && $(PYTEST) $(PYTEST_FLAGS)
 
-.PHONY: build check publish clean install test
+coverage: $(VENV)
+	. $(VENV)/bin/activate && $(PYTEST) --cov=bare_estate/ tests/
+
+.PHONY: build check publish clean install test coverage
