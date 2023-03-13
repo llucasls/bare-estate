@@ -6,6 +6,12 @@ PIP    = $(PYTHON) -m pip
 
 PYTEST_FLAGS = -v
 
+ifeq ($(SHELL), fish)
+	ACTIVATE = source $(VENV)/bin/activate.fish
+else
+	ACTIVATE = . $(VENV)/bin/activate
+endif
+
 dist:
 	if ! test -d dist; then \
 		mkdir dist; \
@@ -33,9 +39,10 @@ $(VENV): dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
-	. $(VENV)/bin/activate && $(PYTEST) $(PYTEST_FLAGS)
+	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS)
 
 coverage: $(VENV)
-	. $(VENV)/bin/activate && $(PYTEST) --cov=bare_estate/ tests/
+	$(ACTIVATE) && $(PYTEST) --cov=bare_estate/ tests/ 2> /dev/null
+	if test -f .coverage; then rm .coverage; fi
 
 .PHONY: build check publish clean install test coverage
