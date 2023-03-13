@@ -1,7 +1,10 @@
 PYTHON = python
-TWINE = $(PYTHON) -m twine
+TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
-VENV = $(CURDIR)/.venv
+VENV   = $(CURDIR)/.venv
+PIP    = $(PYTHON) -m pip
+
+PYTEST_FLAGS = -v
 
 dist:
 	if ! test -d dist; then \
@@ -20,10 +23,16 @@ publish: build
 clean: | dist
 	rm -rf dist/*
 
-$(VENV):
-	$(PYTHON) -m $(VENV)
+install: $(VENV)
 
-test:
-	$(PYTEST)
+$(VENV): dev_requirements.txt
+	if test ! -d $(VENV); then \
+		$(PYTHON) -m venv $(VENV); \
+	fi
+	. $(VENV)/bin/activate && $(PIP) install -r dev_requirements.txt
+	touch $(VENV)
 
-.PHONY: build check publish clean test
+test: $(VENV)
+	. $(VENV)/bin/activate && $(PYTEST) $(PYTEST_FLAGS)
+
+.PHONY: build check publish clean install test
