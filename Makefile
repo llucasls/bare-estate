@@ -1,8 +1,9 @@
 PYTHON = python
 TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
-VENV   = $(CURDIR)/.venv
 PIP    = $(PYTHON) -m pip
+
+VENV   = $(CURDIR)/.venv
 
 PYTEST_FLAGS = -v
 
