@@ -40,7 +40,7 @@ $(VENV): dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
-	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS)
+	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
 
 coverage: $(VENV)
 	$(ACTIVATE) && $(PYTEST) --cov=bare_estate/ tests/ 2> /dev/null
