@@ -38,7 +38,7 @@ $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then \
 		$(PYTHON) -m venv $(VENV); \
 	fi
-	. $(VENV)/bin/activate && $(PIP) install -r dev_requirements.txt
+	$(ACTIVATE) && $(PIP) install -r dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
