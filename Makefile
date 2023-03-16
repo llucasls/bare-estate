@@ -7,6 +7,8 @@ VENV   = $(CURDIR)/.venv
 
 PYTEST_FLAGS = -v
 
+COVERAGE_DIR = bare_estate/
+
 ifeq ($(SHELL), fish)
 	ACTIVATE = source $(VENV)/bin/activate.fish
 else
@@ -43,7 +45,7 @@ test: $(VENV)
 	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
 
 coverage: $(VENV)
-	$(ACTIVATE) && $(PYTEST) --cov=bare_estate/ tests/ 2> /dev/null
+	$(ACTIVATE) && $(PYTEST) --cov=$(COVERAGE_DIR) tests/ 2> /dev/null
 	if test -f .coverage; then rm .coverage; fi
 
 .PHONY: build check publish clean install test coverage
