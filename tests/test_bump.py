@@ -82,6 +82,60 @@ class TestIncreaseMajor:
 
         assert version == "2rc"
 
+    def test_with_minor_alpha(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "minor"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0a"
+
+    def test_with_minor_beta(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--beta", "minor"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0b"
+
+    def test_with_minor_rc(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--rc", "minor"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0rc"
+
+    def test_with_micro_alpha(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4.9"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "micro"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0.0a"
+
+    def test_with_micro_beta(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4.9"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--beta", "micro"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0.0b"
+
+    def test_with_micro_rc(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1.4.9"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--rc", "micro"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2.0.0rc"
+
 
 class TestIncreaseMinor:
     tmp_file = tmp.NamedTemporaryFile()
