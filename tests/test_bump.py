@@ -55,6 +55,33 @@ class TestIncreaseMajor:
 
         assert version == "2.0.0"
 
+    def test_with_major_alpha(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "major"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2a"
+
+    def test_with_major_beta(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--beta", "major"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2b"
+
+    def test_with_major_rc(self):
+        with open(self.tmp_file.name, "w") as file:
+            file.write('[project]\nversion = "1"\n')
+
+        result = sp.run([BUMP, self.tmp_file.name, "--rc", "major"])
+        version = toml.load(self.tmp_file.name)["project"]["version"]
+
+        assert version == "2rc"
+
 
 class TestIncreaseMinor:
     tmp_file = tmp.NamedTemporaryFile()
