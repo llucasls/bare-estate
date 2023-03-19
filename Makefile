@@ -1,4 +1,4 @@
-PYTHON = python
+PYTHON = python3
 TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
 PIP    = $(PYTHON) -m pip
