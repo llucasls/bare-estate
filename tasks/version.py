@@ -36,6 +36,62 @@ class Version:
         self.pre_letter = pre_letter
         self.pre_number = int(pre_number) if pre_number != "" else 0
 
+    def __repr__(self):
+        return self.string
+
+    def __str__(self):
+        return self.string
+
+    def __eq__(self, other):
+        are_equal = True
+        are_equal &= self.major == other.major
+        are_equal &= self.minor == other.minor
+        are_equal &= self.micro == other.micro
+        are_equal &= self.pre_letter == other.pre_letter
+        are_equal &= self.pre_number == other.pre_number
+
+        return are_equal
+
+    def __lt__(self, other):
+        if self.major != other.major:
+            return self.major < other.major
+        if self.minor != other.minor:
+            return self.minor < other.minor
+        if self.micro != other.micro:
+            return self.micro < other.micro
+
+        return False
+
+    def __le__(self, other):
+        if self.major != other.major:
+            return self.major < other.major
+        if self.minor != other.minor:
+            return self.minor < other.minor
+        if self.micro != other.micro:
+            return self.micro < other.micro
+
+        return True
+
+    def __gt__(self, other):
+        if self.major != other.major:
+            return self.major > other.major
+        if self.minor != other.minor:
+            return self.minor > other.minor
+        if self.micro != other.micro:
+            return self.micro > other.micro
+
+        return False
+
+    def __ge__(self, other):
+        if self.major != other.major:
+            return self.major > other.major
+        if self.minor != other.minor:
+            return self.minor > other.minor
+        if self.micro != other.micro:
+            return self.micro > other.micro
+
+        return True
+
     def bump_major(self):
         self.major += 1
         self.minor = 0
