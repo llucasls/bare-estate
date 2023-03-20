@@ -53,11 +53,18 @@ class Version:
     @property
     def tuple(self):
         "return version in tuple format"
+        letter = self.pre_letter
+        number = self.pre_number
+        pre_release = "".join([letter, str(number)]) if number != 0 else letter
         return (self.major,
                 self.minor,
                 self.micro,
-                self.pre_letter,
-                self.pre_number)
+                pre_release)
+
+    @tuple.setter
+    def tuple(self, value):
+        pass
+        #string_list = list(map(str, value))
 
     @property
     def string(self):
@@ -73,3 +80,11 @@ class Version:
         release = ".".join(release_list)
         pre_release = f"{pre_letter}{pre_number}"
         return f"{release}{pre_release}"
+
+    @string.setter
+    def string(self, value):
+        self.__init__(value)
+
+version = Version("5.2a")
+print(Version("2.1.0") < Version("2.1"))
+print(Version("2.1.0") <= Version("2.1"))
