@@ -21,10 +21,14 @@ class Version:
             self._release_size -= 1
 
         exp = re.compile(r"\D+")
-        index = exp.match(pre_release).end()
+        if exp.match(pre_release):
+            index = exp.match(pre_release).end()
 
-        pre_letter = pre_release[:index]
-        pre_number = pre_release[index:]
+            pre_letter = pre_release[:index]
+            pre_number = pre_release[index:]
+        else:
+            pre_letter = ""
+            pre_number = ""
 
         self.major = int(major)
         self.minor = int(minor)
