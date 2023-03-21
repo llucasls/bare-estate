@@ -33,8 +33,8 @@ class Version:
         self.major = int(major)
         self.minor = int(minor)
         self.micro = int(micro)
-        self.pre_letter = pre_letter
-        self.pre_number = int(pre_number) if pre_number != "" else 0
+        self._pre_letter = pre_letter
+        self._pre_number = int(pre_number) if pre_number != "" else 0
 
     def __repr__(self):
         return self.string
@@ -47,8 +47,8 @@ class Version:
         are_equal &= self.major == other.major
         are_equal &= self.minor == other.minor
         are_equal &= self.micro == other.micro
-        are_equal &= self.pre_letter == other.pre_letter
-        are_equal &= self.pre_number == other.pre_number
+        are_equal &= self._pre_letter == other.pre_letter
+        are_equal &= self._pre_number == other.pre_number
 
         return are_equal
 
@@ -107,40 +107,69 @@ class Version:
         self.micro += 1
 
     @property
+    def release(self):
+        "return version release as a string"
+        release_list = [self.major]
+        if self.minor != 0 or self._release_size >= 2:
+            release_list.append(self.minor)
+        if self.micro != 0 or self._release_size == 3:
+            release_list.append(self.micro)
+
+        return ".".join(list(map(str, release_list)))
+
+    @property
+    def pre_release(self):
+        "return version pre-release label"
+        pre_letter = self._pre_letter
+        pre_number = str(self._pre_number) if self._pre_number != 0 else ""
+
+        return f"{pre_letter}{pre_number}"
+
+    @pre_release.setter
+    def pre_release(self, value):
+        exp = re.compile(r"\D+")
+
+        if exp.match(value):
+            index = exp.match(value).end()
+
+            pre_letter = value[:index]
+            pre_number = value[index:]
+        else:
+            pre_letter = ""
+            pre_number = ""
+
+        self._pre_letter = pre_letter
+        self._pre_number = int(pre_number) if pre_number != "" else 0
+
+    @property
     def tuple(self):
         "return version in tuple format"
-        letter = self.pre_letter
-        number = self.pre_number
-        pre_release = "".join([letter, str(number)]) if number != 0 else letter
-        return (self.major,
-                self.minor,
-                self.micro,
-                pre_release)
+        return self.major, self.minor, self.micro, self.pre_release
 
     @tuple.setter
     def tuple(self, value):
-        pass
-        #string_list = list(map(str, value))
+        major, minor, micro, pre_release = list(value)
+
+        if value[1] is None and value[2] is None:
+            self._release_size = 1
+            minor = 0
+            micro = 0
+        elif value[2] is None:
+            self._release_size = 2
+            micro = 0
+        elif None in value:
+            raise ValueError("None is only valid for micro or both minor and micro")
+
+        self.major = major
+        self.minor = minor
+        self.micro = micro
+        self.pre_release = pre_release
 
     @property
     def string(self):
         "return version in string format"
-        release_list = []
-        release_list.append(str(self.major))
-        if self.minor != 0 or self._release_size >= 2:
-            release_list.append(str(self.minor))
-        if self.micro != 0 or self._release_size == 3:
-            release_list.append(str(self.micro))
-        pre_letter = self.pre_letter
-        pre_number = str(self.pre_number) if self.pre_number != 0 else ""
-        release = ".".join(release_list)
-        pre_release = f"{pre_letter}{pre_number}"
-        return f"{release}{pre_release}"
+        return f"{self.release}{self.pre_release}"
 
     @string.setter
     def string(self, value):
         self.__init__(value)
-
-version = Version("5.2a")
-print(Version("2.1.0") < Version("2.1"))
-print(Version("2.1.0") <= Version("2.1"))
