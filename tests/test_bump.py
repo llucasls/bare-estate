@@ -59,7 +59,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "major"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2a"
@@ -68,7 +68,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "major"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2b"
@@ -77,7 +77,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "major"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2rc"
@@ -86,7 +86,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "minor"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0a"
@@ -95,7 +95,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "minor"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0b"
@@ -104,7 +104,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "minor"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0rc"
@@ -113,7 +113,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "micro"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0.0a"
@@ -122,7 +122,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "micro"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0.0b"
@@ -131,7 +131,7 @@ class TestIncreaseMajor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "micro"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "2.0.0rc"
@@ -171,7 +171,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "major"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.1a"
@@ -180,7 +180,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "major"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.1b"
@@ -189,7 +189,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "major"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.1rc"
@@ -198,7 +198,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "minor"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5a"
@@ -207,7 +207,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "minor"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5b"
@@ -216,7 +216,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "minor"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5rc"
@@ -225,7 +225,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "micro"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5.0a"
@@ -234,7 +234,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "micro"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5.0b"
@@ -243,7 +243,7 @@ class TestIncreaseMinor:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "micro"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.5.0rc"
@@ -283,7 +283,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "major"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.0.1a"
@@ -292,7 +292,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "major"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.0.1b"
@@ -301,7 +301,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "major"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "major"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.0.1rc"
@@ -310,7 +310,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "minor"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.1a"
@@ -319,7 +319,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "minor"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.1b"
@@ -328,7 +328,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "minor"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "minor"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.1rc"
@@ -337,7 +337,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--alpha", "micro"])
+        result = sp.run([BUMP, "--alpha", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.10a"
@@ -346,7 +346,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--beta", "micro"])
+        result = sp.run([BUMP, "--beta", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.10b"
@@ -355,7 +355,7 @@ class TestIncreaseMicro:
         with open(self.tmp_file.name, "w") as file:
             file.write('[project]\nversion = "1.4.9"\n')
 
-        result = sp.run([BUMP, self.tmp_file.name, "--rc", "micro"])
+        result = sp.run([BUMP, "--rc", self.tmp_file.name, "micro"])
         version = toml.load(self.tmp_file.name)["project"]["version"]
 
         assert version == "1.4.10rc"
