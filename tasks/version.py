@@ -107,6 +107,9 @@ class Version:
         return True
 
     def split_pre_release(self):
+        if self.pre_release == "":
+            return "", 0
+
         exp = self._pre_release_expression
         if exp.match(self.pre_release):
             index = exp.match(self.pre_release).end()
