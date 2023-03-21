@@ -4,6 +4,7 @@ import re
 class Version:
     _release_expression = re.compile(r"\d+(\.\d+){0,2}")
     _pre_release_expression = re.compile(r"\D+")
+    _levels = {"a": 1, "b": 2, "c": 3, "alpha": 1, "beta": 2, "rc": 3, "": 4}
 
     def __init__(self, version: str):
         exp = self._release_expression
@@ -46,14 +47,16 @@ class Version:
         return self.string
 
     def __eq__(self, other):
-        are_equal = True
-        are_equal &= self.major == other.major
-        are_equal &= self.minor == other.minor
-        are_equal &= self.micro == other.micro
-        are_equal &= self._pre_letter == other.pre_letter
-        are_equal &= self._pre_number == other.pre_number
+        if self.major != other.major:
+            return False
+        if self.minor != other.minor:
+            return False
+        if self.micro != other.micro:
+            return False
+        if not self.pre_release_is_equal(other):
+            return False
 
-        return are_equal
+        return True
 
     def __lt__(self, other):
         if self.major != other.major:
@@ -62,6 +65,8 @@ class Version:
             return self.minor < other.minor
         if self.micro != other.micro:
             return self.micro < other.micro
+        if not self.pre_release_is_equal(other):
+            return self.pre_release_is_lower(other)
 
         return False
 
@@ -72,6 +77,8 @@ class Version:
             return self.minor < other.minor
         if self.micro != other.micro:
             return self.micro < other.micro
+        if not self.pre_release_is_equal(other):
+            return self.pre_release_is_lower(other)
 
         return True
 
@@ -82,6 +89,8 @@ class Version:
             return self.minor > other.minor
         if self.micro != other.micro:
             return self.micro > other.micro
+        if not self.pre_release_is_equal(other):
+            return self.pre_release_is_greater(other)
 
         return False
 
@@ -92,6 +101,58 @@ class Version:
             return self.minor > other.minor
         if self.micro != other.micro:
             return self.micro > other.micro
+        if not self.pre_release_is_equal(other):
+            return self.pre_release_is_greater(other)
+
+        return True
+
+    def split_pre_release(self):
+        exp = self._pre_release_expression
+        if exp.match(self.pre_release):
+            index = exp.match(self.pre_release).end()
+
+            pre_letter = self.pre_release[:index]
+            pre_number = self.pre_release[index:]
+            pre_number = int(pre_number) if pre_number != "" else 0
+        else:
+            pre_letter = ""
+            pre_number = 0
+
+        return pre_letter, pre_number
+
+    def pre_release_is_greater(self, other):
+        this = self.split_pre_release()
+        that = other.split_pre_release()
+        levels = self._levels
+
+        if levels[this[0]] != levels[that[0]]:
+            return levels[this[0]] > levels[that[0]]
+        if this[1] != that[1]:
+            return this[1] > that[1]
+
+        return False
+
+    def pre_release_is_lower(self, other):
+        this = self.split_pre_release()
+        that = other.split_pre_release()
+        levels = self._levels
+
+        if levels[this[0]] != levels[that[0]]:
+            return levels[this[0]] < levels[that[0]]
+        if this[1] != that[1]:
+            return this[1] < that[1]
+
+        return False
+
+    def pre_release_is_equal(self, other):
+        this = self.split_pre_release()
+        that = other.split_pre_release()
+        levels = self._levels
+
+        if levels[this[0]] != levels[that[0]]:
+            return False
+        if this[1] != that[1]:
+            return False
 
         return True
 
@@ -143,6 +204,11 @@ class Version:
 
         self._pre_letter = pre_letter
         self._pre_number = int(pre_number) if pre_number != "" else 0
+
+    @pre_release.deleter
+    def pre_release(self):
+        self._pre_letter = ""
+        self._pre_number = 0
 
     @property
     def tuple(self):
