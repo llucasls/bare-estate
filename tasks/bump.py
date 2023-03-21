@@ -5,6 +5,8 @@ import argparse
 
 import toml
 
+from version import Version
+
 
 class Release(argparse.Namespace):
     def __init__(self, args):
@@ -117,19 +119,30 @@ def main():
     args = Release(parser.parse_args())
 
     input_file = args.file
-    release = args.release
-    pre_release = args.pre_release
-
     content = read_file(input_file)
 
     get_version = lambda line: line.strip().find("version") == 0
     has_version = list(map(get_version, content))
 
     version_index = has_version.index(True)
-    version = content[version_index]
+    version_object = toml.loads(content[version_index])
+    version = Version(version_object["version"])
 
-    version = bump(version, release, pre_release)
-    content[version_index] = version
+    if args.release == "major":
+        version.bump_major()
+    elif args.release == "minor":
+        version.bump_minor()
+    elif args.release == "micro":
+        version.bump_micro()
+
+    if args.pre_release == "alpha":
+        version.add_alpha()
+    elif args.pre_release == "beta":
+        version.add_beta()
+    elif args.pre_release == "rc":
+        version.add_rc()
+
+    content[version_index] = toml.dumps({"version": str(version)})
 
     with open(input_file, "w") as file:
         for line in content:
