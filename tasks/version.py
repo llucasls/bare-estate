@@ -2,8 +2,11 @@ import re
 
 
 class Version:
+    _release_expression = re.compile(r"\d+(\.\d+){0,2}")
+    _pre_release_expression = re.compile(r"\D+")
+
     def __init__(self, version: str):
-        exp = re.compile(r"\d+(\.\d+){0,2}")
+        exp = self._release_expression
         index = exp.match(version).end()
 
         release = version[:index]
@@ -20,7 +23,7 @@ class Version:
             minor = "0"
             self._release_size -= 1
 
-        exp = re.compile(r"\D+")
+        exp = self._pre_release_expression
         if exp.match(pre_release):
             index = exp.match(pre_release).end()
 
@@ -127,7 +130,7 @@ class Version:
 
     @pre_release.setter
     def pre_release(self, value):
-        exp = re.compile(r"\D+")
+        exp = self._pre_release_expression
 
         if exp.match(value):
             index = exp.match(value).end()
