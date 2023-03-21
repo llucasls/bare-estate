@@ -163,15 +163,51 @@ class Version:
         self.major += 1
         self.minor = 0
         self.micro = 0
+        del self.pre_release
 
     def bump_minor(self):
         self._release_size = max(self._release_size, 2)
         self.minor += 1
         self.micro = 0
+        del self.pre_release
 
     def bump_micro(self):
         self._release_size = max(self._release_size, 3)
         self.micro += 1
+        del self.pre_release
+
+    def add_alpha(self):
+        pre_letter, pre_number = self.split_pre_release()
+        if pre_letter in ["a", "alpha"]:
+            pre_number += 1
+        else:
+            pre_letter = "a"
+            pre_number = 0
+
+        self._pre_letter = pre_letter
+        self._pre_number = pre_number
+
+    def add_beta(self):
+        pre_letter, pre_number = self.split_pre_release()
+        if pre_letter in ["b", "beta"]:
+            pre_number += 1
+        else:
+            pre_letter = "b"
+            pre_number = 0
+
+        self._pre_letter = pre_letter
+        self._pre_number = pre_number
+
+    def add_rc(self):
+        pre_letter, pre_number = self.split_pre_release()
+        if pre_letter in ["c", "rc"]:
+            pre_number += 1
+        else:
+            pre_letter = "rc"
+            pre_number = 0
+
+        self._pre_letter = pre_letter
+        self._pre_number = pre_number
 
     @property
     def release(self):
