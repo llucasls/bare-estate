@@ -9,11 +9,7 @@ PYTEST_FLAGS = -v
 
 COVERAGE_DIR = bare_estate/
 
-ifeq ($(SHELL), fish)
-	ACTIVATE = source $(VENV)/bin/activate.fish
-else
-	ACTIVATE = . $(VENV)/bin/activate
-endif
+ACTIVATE = . $(VENV)/bin/activate
 
 dist:
 	if ! test -d dist; then \
