@@ -12,9 +12,7 @@ COVERAGE_DIR = bare_estate/
 ACTIVATE = . $(VENV)/bin/activate
 
 dist:
-	if ! test -d dist; then \
-		mkdir dist; \
-	fi
+	mkdir dist
 
 build:
 	$(PYTHON) -m build
