@@ -1,3 +1,4 @@
 toml
 pytest
 pytest-cov
+bumpline
