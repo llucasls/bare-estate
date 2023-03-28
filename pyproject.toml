@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "bare_estate"
 version = "0.1"
 authors = [
-  { name="Lucas L. S. Haine", email="lucaslshaine@gmail.com" },
+    { name="Lucas L. S. Haine", email="lucaslshaine@gmail.com" },
 ]
 description = "Manage your dotfiles seamlessly with a bare repo"
 readme = "README.md"
