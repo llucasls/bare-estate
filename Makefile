@@ -44,4 +44,4 @@ coverage: $(VENV)
 
 .PHONY: build check publish clean install test coverage
 
-.SILENT: check publish test coverage
+.SILENT: build check publish test coverage $(VENV)
