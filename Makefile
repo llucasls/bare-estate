@@ -43,3 +43,5 @@ coverage: $(VENV)
 	if test -f .coverage; then rm .coverage; fi
 
 .PHONY: build check publish clean install test coverage
+
+.SILENT: check publish test coverage
