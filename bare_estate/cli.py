@@ -21,7 +21,7 @@ def main():
     except FileNotFoundError:
         log_err("Error: the repository has not been initialized yet.")
         log_err("You can create a new repository using the command:\n")
-        log_err("bare init")
+        log_err("estate init")
         status = 2
 
     except NotARepositoryError as error:
