@@ -2,3 +2,6 @@ toml
 pytest
 pytest-cov
 bumpline
+
+pytest-mock
+pytest-mocha
