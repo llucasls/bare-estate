@@ -1,7 +1,7 @@
 toml
-pytest
-pytest-cov
 bumpline
 
+pytest
+pytest-cov
 pytest-mock
 pytest-mocha
