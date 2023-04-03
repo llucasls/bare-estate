@@ -5,7 +5,7 @@ PIP    = $(PYTHON) -m pip
 
 VENV   = $(CURDIR)/.venv
 
-PYTEST_FLAGS = -v
+PYTEST_FLAGS = --verbose --mocha
 
 COVERAGE_DIR = bare_estate/
 
