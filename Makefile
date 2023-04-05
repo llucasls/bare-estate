@@ -26,7 +26,8 @@ publish: build
 clean: | dist
 	rm -rf dist/*
 
-install: $(VENV)
+install:
+	@$(MAKE) --always-make --no-print-directory $(VENV)
 
 $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then \
