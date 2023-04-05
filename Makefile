@@ -4,13 +4,12 @@ TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
 PIP    = $(PYTHON) -m pip
 
-VENV   = $(CURDIR)/.venv
+VENV     = $(CURDIR)/.venv
+ACTIVATE = . $(VENV)/bin/activate
 
 PYTEST_FLAGS = --verbose --mocha
 
 COVERAGE_DIR = bare_estate/
-
-ACTIVATE = . $(VENV)/bin/activate
 
 dist:
 	mkdir dist
