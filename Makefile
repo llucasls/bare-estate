@@ -1,4 +1,5 @@
 PYTHON = python3
+BUILD  = $(PYTHON) -m build
 TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
 PIP    = $(PYTHON) -m pip
@@ -15,7 +16,7 @@ dist:
 	mkdir dist
 
 build:
-	$(PYTHON) -m build
+	$(BUILD)
 
 check: | dist
 	$(TWINE) check dist/*
