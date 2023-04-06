@@ -1,7 +1,7 @@
 import subprocess as sp
 
 
-ESTATE = "bare_estate/cli.py"
+ESTATE = "estate"
 
 
 def test_run_without_arguments():
