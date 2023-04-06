@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import sys
 
 try:
@@ -39,7 +38,3 @@ def main():
         status = 4
 
     return status
-
-
-if __name__ == "__main__":
-    sys.exit(main())
