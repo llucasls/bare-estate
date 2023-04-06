@@ -15,7 +15,7 @@ dist:
 	mkdir dist
 
 build:
-	$(BUILD)
+	$(BUILD) $(BUILD_FLAGS)
 
 check: | dist
 	$(TWINE) check dist/*
