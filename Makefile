@@ -7,6 +7,8 @@ PIP    = $(PYTHON) -m pip
 VENV     = $(CURDIR)/.venv
 ACTIVATE = . $(VENV)/bin/activate
 
+BUMP = bumpline
+
 PYTEST_FLAGS = --verbose --mocha
 
 COVERAGE_DIR = bare_estate/
@@ -37,7 +39,13 @@ $(VENV): dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
-	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
+	-$(ACTIVATE); \
+	$(BUMP) -d pyproject.toml; \
+	$(BUILD) --wheel; \
+	$(PIP) install --force-reinstall $$(ls -t dist/*dev* | head -1); \
+	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
+	$(ACTIVATE) && $(BUMP) -D pyproject.toml
+	-rm dist/*dev*
 
 coverage: $(VENV)
 	$(ACTIVATE) && $(PYTEST) --cov=$(COVERAGE_DIR) tests/ 2> /dev/null
