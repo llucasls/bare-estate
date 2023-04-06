@@ -1,5 +1,5 @@
 PYTHON = python3
-BUILD  = $(PYTHON) -m build
+BUILD  = $(shell which $(PYTHON)) -m build
 TWINE  = $(PYTHON) -m twine
 PYTEST = $(PYTHON) -m pytest
 PIP    = $(PYTHON) -m pip
