@@ -22,7 +22,7 @@ tar:
 	$(TAR) $(TAR_FLAGS) $(SRC_FILES)
 
 config:
-	mkdir $(XDG_CONFIG_HOME)
+	mkdir -p $(XDG_CONFIG_HOME)
 	echo '{"history_location":"$(HOME)/estate"}' > $(XDG_CONFIG_HOME)/bare_estate.json
 
 .PHONY: test tar install config
