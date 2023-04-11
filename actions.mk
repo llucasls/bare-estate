@@ -5,7 +5,7 @@ PYTEST = $(PYTHON) -m pytest
 TAR       = tar
 TAR_FLAGS = --create --file=$(SRC_ARCHIVE)
 
-SRC_FILES   = pyproject.toml README.md bare_estate/*py tests/*.py
+SRC_FILES   = pyproject.toml README.md bare_estate/*.py tests/*.py
 SRC_ARCHIVE = bare_estate.tar
 
 test: install
