@@ -9,7 +9,8 @@ SRC_FILES   = pyproject.toml README.md bare_estate/*.py tests/*.py
 SRC_ARCHIVE = bare_estate.tar
 
 test: install
-	$(PYTEST) --verbose --mocha
+	echo '{"history_location":"$(HOME)"}' > $(HOME)/bare_estate.json
+	XDG_CONFIG_HOME=$(HOME) $(PYTEST) --verbose --mocha
 
 install: tar
 	$(PIP) install --upgrade -r dev_requirements.txt
