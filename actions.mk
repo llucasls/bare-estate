@@ -10,7 +10,7 @@ SRC_ARCHIVE = bare_estate.tar
 
 XDG_CONFIG_HOME = $(HOME)/.config
 
-test: install | config
+test: install config
 	estate init
 	XDG_CONFIG_HOME=$(HOME)/.config $(PYTEST) --verbose --mocha
 
