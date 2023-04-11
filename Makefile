@@ -13,6 +13,12 @@ PYTEST_FLAGS = --verbose --mocha
 
 COVERAGE_DIR = bare_estate/
 
+TAR       = tar
+TAR_FLAGS = --create --file=$(SRC_ARCHIVE)
+
+SRC_FILES   = pyproject.toml README.md bare_estate/*.py tests/*.py
+SRC_ARCHIVE = bare_estate.tar
+
 dist:
 	mkdir dist
 
@@ -39,13 +45,11 @@ $(VENV): dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
-	-$(ACTIVATE); \
-	$(BUMP) -d pyproject.toml; \
-	$(BUILD) --wheel; \
-	$(PIP) install --force-reinstall $$(ls -t dist/*dev* | head -1); \
-	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
-	$(ACTIVATE) && $(BUMP) -D pyproject.toml
-	-rm dist/*dev*
+	$(TAR) $(TAR_FLAGS) $(SRC_FILES)
+	-$(ACTIVATE); $(PIP) install $(SRC_ARCHIVE); \
+	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES); \
+	$(PIP) uninstall bare-estate --yes &> /dev/null
+	-rm $(SRC_ARCHIVE)
 
 coverage: $(VENV)
 	$(ACTIVATE) && $(PYTEST) --cov=$(COVERAGE_DIR) tests/ 2> /dev/null
