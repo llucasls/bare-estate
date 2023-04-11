@@ -35,7 +35,7 @@ clean: | dist
 	rm -rf dist/*
 
 install:
-	@$(MAKE) --always-make --no-print-directory $(VENV)
+	$(MAKE) --always-make --no-print-directory $(VENV)
 
 $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then \
@@ -57,4 +57,4 @@ coverage: $(VENV)
 
 .PHONY: build check publish clean install test coverage
 
-.SILENT: build check publish test coverage $(VENV)
+.SILENT: build check publish install test coverage $(VENV)
