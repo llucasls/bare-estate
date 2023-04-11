@@ -12,7 +12,7 @@ XDG_CONFIG_HOME = $(HOME)/.config
 
 test: install config
 	estate init
-	XDG_CONFIG_HOME=$(HOME)/.config $(PYTEST) --verbose --mocha
+	$(PYTEST) --verbose --mocha
 
 install: tar
 	$(PIP) install --upgrade -r dev_requirements.txt
