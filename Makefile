@@ -17,7 +17,7 @@ TAR       = tar
 TAR_FLAGS = --create --file=$(SRC_ARCHIVE)
 
 SRC_FILES   = pyproject.toml README.md bare_estate/*.py tests/*.py
-SRC_ARCHIVE = bare_estate.tar
+SRC_ARCHIVE := $(shell mktemp --dry-run --suffix=.tar)
 
 dist:
 	mkdir dist
