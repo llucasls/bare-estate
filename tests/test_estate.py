@@ -18,7 +18,7 @@ def test_cli_status_when_repo_doesnt_exist():
     """Test CLI Application ::
     should error when repository hasn’t been initialized yet"""
 
-    env = os.environ
+    env = os.environ.copy()
     env["BARE_ESTATE_LOCATION"] = f"{HOME}/dotfiles"
     stderr = b"Error: the repository has not been initialized yet.\nYou can create a new repository using the command:\n\nestate init\n"
     result = sp.run([ESTATE, "status"], stdout=sp.PIPE, stderr=sp.PIPE,
