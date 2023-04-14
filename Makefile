@@ -52,8 +52,8 @@ test: $(VENV)
 	-rm $(SRC_ARCHIVE)
 
 coverage: $(VENV)
-	$(ACTIVATE) && $(PYTEST) --cov=$(COVERAGE_DIR) tests/ 2> /dev/null
-	if test -f .coverage; then rm .coverage; fi
+	FLAGS="--cov=$(COVERAGE_DIR)"; \
+	$(MAKE) --no-print-directory test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
 
 .PHONY: build check publish clean install test coverage
 
