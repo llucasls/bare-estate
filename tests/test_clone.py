@@ -1,4 +1,10 @@
+import os
+
 from bare_estate.commands import clone
+
+
+ESTATE = "estate"
+HOME = os.environ["HOME"]
 
 
 class TestGitClone:
