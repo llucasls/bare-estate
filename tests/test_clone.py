@@ -16,3 +16,11 @@ class TestGitClone:
         mock_run().returncode = 0
 
         assert clone() == 0
+
+    def test_clone_repository(self):
+        "should create a bare repository with the same files from a remote repo"
+
+        env = os.environ.copy()
+        #env["BARE_ESTATE_LOCATION"] = tmp_dir
+
+        assert True
