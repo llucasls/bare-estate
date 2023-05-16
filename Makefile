@@ -38,20 +38,19 @@ install:
 	$(MAKE) --always-make --no-print-directory $(VENV)
 
 $(VENV): dev_requirements.txt
-	if test ! -d $(VENV); then \
-		$(PYTHON) -m venv $(VENV); \
-	fi
+	$(PYTHON) -m venv $(VENV)
+	$(ACTIVATE) && $(PIP) install --upgrade pip
 	$(ACTIVATE) && $(PIP) install --upgrade -r dev_requirements.txt
 	touch $(VENV)
 
-test: $(VENV)
+test: | $(VENV)
 	$(TAR) $(TAR_FLAGS) $(SRC_FILES)
 	-$(ACTIVATE); $(PIP) install $(SRC_ARCHIVE); \
 	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES); \
 	$(PIP) uninstall bare-estate --yes &> /dev/null
 	-rm $(SRC_ARCHIVE)
 
-coverage: $(VENV)
+coverage: | $(VENV)
 	FLAGS="--cov=$(COVERAGE_DIR)"; \
 	$(MAKE) --no-print-directory test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
 
