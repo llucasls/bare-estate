@@ -43,14 +43,10 @@ $(VENV): dev_requirements.txt
 	$(ACTIVATE) && $(PIP) install --upgrade -r dev_requirements.txt
 	touch $(VENV)
 
-test: | $(VENV)
-	$(TAR) $(TAR_FLAGS) $(SRC_FILES)
-	-$(ACTIVATE); $(PIP) install $(SRC_ARCHIVE); \
-	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES); \
-	$(PIP) uninstall bare-estate --yes &> /dev/null
-	-rm $(SRC_ARCHIVE)
+test: $(VENV)
+	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
 
-coverage: | $(VENV)
+coverage: $(VENV)
 	FLAGS="--cov=$(COVERAGE_DIR)"; \
 	$(MAKE) --no-print-directory test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
 
