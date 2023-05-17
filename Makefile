@@ -38,7 +38,7 @@ install:
 	$(MAKE) --always-make --no-print-directory $(VENV)
 
 $(VENV): dev_requirements.txt
-	$(PYTHON) -m venv $(VENV)
+	if test ! -d $(VENV); then $(PYTHON) -m venv $(VENV); fi
 	$(ACTIVATE) && $(PIP) install --upgrade pip
 	$(ACTIVATE) && $(PIP) install --upgrade -r dev_requirements.txt
 	touch $(VENV)
