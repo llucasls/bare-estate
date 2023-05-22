@@ -3,7 +3,7 @@ import os
 from bare_estate.commands import clone
 
 
-ESTATE = "estate"
+ESTATE = os.path.join(os.getcwd(), "estate")
 HOME = os.environ["HOME"]
 
 
