@@ -23,4 +23,4 @@ class TestGitClone:
         env = os.environ.copy()
         #env["BARE_ESTATE_LOCATION"] = tmp_dir
 
-        assert True
+        raise NotImplementedError("test clone command")
