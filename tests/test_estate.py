@@ -3,7 +3,7 @@ import subprocess as sp
 import tempfile as tmp
 
 
-ESTATE = "estate"
+ESTATE = os.path.join(os.getcwd(), "estate")
 HOME = os.environ["HOME"]
 
 
