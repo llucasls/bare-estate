@@ -8,6 +8,7 @@ exclude = [
     "Makefile",
     "dev_requirements.txt",
     ".?*",
+    "estate",
 ]
 
 [project]
