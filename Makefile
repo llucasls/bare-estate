@@ -1,23 +1,17 @@
 PYTHON = python3
-BUILD  = /usr/bin/python3 -m build
-TWINE  = $(PYTHON) -m twine
-PYTEST = $(PYTHON) -m pytest
-PIP    = $(PYTHON) -m pip
 
-VENV     = $(CURDIR)/.venv
-ACTIVATE = . $(VENV)/bin/activate
+VENV   = $(CURDIR)/.venv
 
-BUMP = bumpline
+BUILD  = $(VENV)/bin/$(PYTHON) -m build
+TWINE  = $(VENV)/bin/$(PYTHON) -m twine
+PIP    = $(VENV)/bin/$(PYTHON) -m pip
+PYTEST = $(VENV)/bin/$(PYTHON) -m pytest
+
+BUMP   = $(VENV)/bin/bumpline
 
 PYTEST_FLAGS = --verbose --mocha
 
 COVERAGE_DIR = bare_estate/
-
-TAR       = tar
-TAR_FLAGS = --create --file=$(SRC_ARCHIVE)
-
-SRC_FILES   = pyproject.toml README.md bare_estate/*.py tests/*.py
-SRC_ARCHIVE := $(shell mktemp --dry-run --suffix=.tar)
 
 dist:
 	mkdir dist
@@ -39,12 +33,12 @@ install:
 
 $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then $(PYTHON) -m venv $(VENV); fi
-	$(ACTIVATE) && $(PIP) install --upgrade pip
-	$(ACTIVATE) && $(PIP) install --upgrade -r dev_requirements.txt
+	$(PIP) install --upgrade pip
+	$(PIP) install --upgrade -r dev_requirements.txt
 	touch $(VENV)
 
 test: $(VENV)
-	$(ACTIVATE) && $(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
+	$(PYTEST) $(PYTEST_FLAGS) $(PYTEST_FILES)
 
 coverage: $(VENV)
 	FLAGS="--cov=$(COVERAGE_DIR)"; \
