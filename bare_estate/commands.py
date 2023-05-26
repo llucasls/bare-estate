@@ -89,7 +89,7 @@ def clone():
                      "--exclude",
                      ".git",
                      f"{tmp_dir}/dotfiles/",
-                     f"{HOME}/"]
+                     f"{configs['base_directory']}/"]
 
         config_cmd = [*bare_cmd, "config", "status.showUntrackedFiles", "no"]
 
