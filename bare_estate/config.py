@@ -15,11 +15,20 @@ DEFAULT_CONFIGS = {
 
 
 try:
-    if BARE_ESTATE_LOCATION is None:
-        with open(f"{XDG_CONFIG_HOME}/{CONFIG_FILE}") as config_file:
-            configs = json.load(config_file)
-    else:
-        configs = { "history_location": BARE_ESTATE_LOCATION }
-
+    file = open(f"{XDG_CONFIG_HOME}/{CONFIG_FILE}")
+    file_configs = json.load(file)
 except FileNotFoundError:
-    configs = DEFAULT_CONFIGS
+    file_configs = DEFAULT_CONFIGS
+finally:
+    if file:
+        file.close()
+
+
+configs = {}
+for key in DEFAULT_CONFIGS.keys():
+    try:
+        config_value = file_configs[key]
+    except KeyError:
+        config_value = DEFAULT_CONFIGS[key]
+
+    configs[key] = os.environ.get(f"BARE_ESTATE_{key.upper()}", config_value)
