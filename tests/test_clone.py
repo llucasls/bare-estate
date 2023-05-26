@@ -1,4 +1,5 @@
 import os
+import sys
 import tempfile as tmp
 import subprocess as sp
 import tarfile
@@ -31,7 +32,9 @@ class TestGitClone:
             dotfiles_repo = os.path.join(tmp_dir, "dotfiles_repo")
 
             env = os.environ.copy()
-            env["BARE_ESTATE_LOCATION"] = os.path.join(tmp_dir, "dotfiles")
+            env["BARE_ESTATE_HISTORY_LOCATION"] = os.path.join(tmp_dir,
+                                                               "dotfiles")
+            env["BARE_ESTATE_BASE_DIRECTORY"] = tmp_dir
 
             proc = sp.run([ESTATE, "clone", dotfiles_repo], env=env,
                           stdout=sp.PIPE, stderr=sp.PIPE)
