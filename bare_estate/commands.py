@@ -4,10 +4,7 @@ import subprocess as sp
 import errno
 import tempfile
 
-try:
-    from bare_estate.config import configs, HOME
-except ImportError:
-    from config import configs, HOME
+from bare_estate.config import configs, HOME
 
 
 class NotARepositoryError(NotADirectoryError):
