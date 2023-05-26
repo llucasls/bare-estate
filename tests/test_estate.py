@@ -21,7 +21,7 @@ def test_cli_status_when_repo_doesnt_exist():
 
     tmp_dir = tmp.NamedTemporaryFile(delete=True, dir=HOME).name
     env = os.environ.copy()
-    env["BARE_ESTATE_LOCATION"] = tmp_dir
+    env["BARE_ESTATE_HISTORY_LOCATION"] = tmp_dir
 
     stderr = b"Error: the repository has not been initialized yet.\nYou can create a new repository using the command:\n\nestate init\n"
     result = sp.run([ESTATE, "status"], stdout=sp.PIPE, stderr=sp.PIPE,
