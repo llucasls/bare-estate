@@ -8,6 +8,11 @@ XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", f"{HOME}/.config")
 BARE_ESTATE_LOCATION = os.environ.get("BARE_ESTATE_LOCATION", None)
 CONFIG_FILE = "bare_estate.json"
 
+DEFAULT_CONFIGS = {
+    "history_location": os.path.join(HOME, ".local/share", "bare_estate"),
+    "base_directory": HOME,
+}
+
 
 try:
     if BARE_ESTATE_LOCATION is None:
@@ -17,7 +22,4 @@ try:
         configs = { "history_location": BARE_ESTATE_LOCATION }
 
 except FileNotFoundError:
-    config_file = f"{XDG_CONFIG_HOME}/{CONFIG_FILE}"
-    print("Error: the configuration file %s was not found" %config_file,
-          file=sys.stderr)
-    sys.exit(1)
+    configs = DEFAULT_CONFIGS
