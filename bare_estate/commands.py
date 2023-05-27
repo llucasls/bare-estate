@@ -4,7 +4,7 @@ import subprocess as sp
 import errno
 import tempfile
 
-from bare_estate.config import configs, HOME
+from bare_estate.config import configs
 
 
 class NotARepositoryError(NotADirectoryError):
@@ -14,7 +14,7 @@ class NotARepositoryError(NotADirectoryError):
 cli_args = sys.argv[1:]
 bare_cmd = ["git",
             f"--git-dir={configs['history_location']}",
-            f"--work-tree={HOME}"]
+            f"--work-tree={configs['base_directory']}"]
 
 
 log_err = lambda message: print(message, file=sys.stderr)
