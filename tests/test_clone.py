@@ -14,6 +14,7 @@ TARBALL_PATH = "tests/mocks/dotfiles.tar.gz"
 
 class TestGitClone:
     "Test estate clone command"
+
     def test_clone_status(self, mocker):
         "should return status 0 when no error occurs"
 
