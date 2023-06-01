@@ -9,7 +9,7 @@ ESTATE = os.path.join(os.getcwd(), "estate")
 class TestGitInit:
     "Test estate init command"
 
-    def test_initialize_repositoy(self):
+    def test_initialize_repository(self):
         "should create a new bare repository"
 
         with tmp.TemporaryDirectory(dir=os.getcwd()) as tmp_dir:
