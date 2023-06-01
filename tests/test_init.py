@@ -11,7 +11,7 @@ class TestGitInit:
 
     def _get_env(self, base_dir):
         return {
-            *os.environ,
+            **os.environ,
             "BARE_ESTATE_HISTORY_LOCATION": os.path.join(base_dir, "dotfiles"),
             "BARE_ESTATE_BASE_DIRECTORY": base_dir,
         }
