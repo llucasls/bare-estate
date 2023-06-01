@@ -15,6 +15,13 @@ TARBALL_PATH = "tests/mocks/dotfiles.tar.gz"
 class TestGitClone:
     "Test estate clone command"
 
+    def _get_env(self, base_dir):
+        return {
+            **os.environ,
+            "BARE_ESTATE_HISTORY_LOCATION": os.path.join(base_dir, "dotfiles"),
+            "BARE_ESTATE_BASE_DIRECTORY": base_dir,
+        }
+
     def test_clone_status(self, mocker):
         "should return status 0 when no error occurs"
 
@@ -32,10 +39,7 @@ class TestGitClone:
 
             dotfiles_repo = os.path.join(tmp_dir, "dotfiles_repo")
 
-            env = os.environ.copy()
-            env["BARE_ESTATE_HISTORY_LOCATION"] = os.path.join(tmp_dir,
-                                                               "dotfiles")
-            env["BARE_ESTATE_BASE_DIRECTORY"] = tmp_dir
+            env = self._get_env(tmp_dir)
 
             proc = sp.run([ESTATE, "clone", dotfiles_repo], env=env,
                           stdout=sp.PIPE, stderr=sp.PIPE)
