@@ -5,10 +5,11 @@ import json
 
 HOME = os.environ["HOME"]
 XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", f"{HOME}/.config")
+XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME", f"{HOME}/.local/share")
 CONFIG_FILE = "bare_estate.json"
 
 DEFAULT_CONFIGS = {
-    "history_location": os.path.join(HOME, ".local/share", "bare_estate"),
+    "history_location": os.path.join(XDG_DATA_HOME, "bare_estate"),
     "base_directory": HOME,
 }
 
