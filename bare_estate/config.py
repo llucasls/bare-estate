@@ -5,7 +5,6 @@ import json
 
 HOME = os.environ["HOME"]
 XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", f"{HOME}/.config")
-BARE_ESTATE_LOCATION = os.environ.get("BARE_ESTATE_LOCATION", None)
 CONFIG_FILE = "bare_estate.json"
 
 DEFAULT_CONFIGS = {
