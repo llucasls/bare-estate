@@ -26,9 +26,6 @@ finally:
 
 configs = {}
 for key in DEFAULT_CONFIGS.keys():
-    try:
-        config_value = file_configs[key]
-    except KeyError:
-        config_value = DEFAULT_CONFIGS[key]
+    config_value = file_configs.get(key, DEFAULT_CONFIGS[key])
 
     configs[key] = os.environ.get(f"BARE_ESTATE_{key.upper()}", config_value)
