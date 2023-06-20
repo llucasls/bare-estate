@@ -41,9 +41,10 @@ complete path of the file.
 ### Examples:
 
 bare_estate.json:
-```
+```json
 {
-  "history_location": "/home/lucas/.dotfiles"
+    "history_location": "/home/lucas/.local/share/bare_estate",
+    "base_directory": "/home/lucas"
 }
 ```
 
