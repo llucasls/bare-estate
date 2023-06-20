@@ -37,6 +37,9 @@ The configuration is made by using a json file. The path of the file is
 - history_location: it says where your bare repository directory will be
 located. Environment variables don't expand. So you will have to write the
 complete path of the file.
+- base_directory: the directory from where you will manage all your dotfiles.
+You can either put them directly in the base directory, or in subdirectories
+within it.
 
 ### Examples:
 
