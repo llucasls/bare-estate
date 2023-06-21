@@ -1,5 +1,5 @@
 import os
-import sys
+import io
 import json
 
 
@@ -14,14 +14,14 @@ DEFAULT_CONFIGS = {
 }
 
 
+file = io.BytesIO()
 try:
     file = open(f"{XDG_CONFIG_HOME}/{CONFIG_FILE}")
     file_configs = json.load(file)
 except FileNotFoundError:
     file_configs = DEFAULT_CONFIGS
 finally:
-    if file:
-        file.close()
+    file.close()
 
 
 configs = {}
