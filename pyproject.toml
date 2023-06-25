@@ -13,7 +13,7 @@ exclude = [
 
 [project]
 name = "bare_estate"
-version = "0.3"
+version = "0.4"
 authors = [
     { name="Lucas L. S. Haine", email="lucaslshaine@gmail.com" },
 ]

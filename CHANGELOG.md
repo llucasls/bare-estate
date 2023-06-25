@@ -1,3 +1,13 @@
+## 0.4.0 - 2023-06-25
+
+### Added
+
+- Add support for the XDG_DATA_HOME environment variable.
+
+### Fixed
+
+- Fix application when no config file is found.
+
 ## 0.3.0 - 2023-06-03
 
 ### Added
