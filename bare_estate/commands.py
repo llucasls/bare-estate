@@ -100,6 +100,14 @@ def clone():
     return status
 
 
+def forget():
+    history_dir_exists()
+    files = sys.argv[2:]
+    status = sp.run([*bare_cmd, "rm", "--cached", *files]).returncode
+
+    return status
+
+
 def git():
     history_dir_exists()
 
