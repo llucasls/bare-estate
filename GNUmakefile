@@ -1,6 +1,6 @@
-PYTHON = python3.11
+PYTHON = python3
 
-VENV   = $(.CURDIR)/.venv
+VENV   = $(CURDIR)/.venv
 
 BUILD  = $(VENV)/bin/$(PYTHON) -m build
 TWINE  = $(VENV)/bin/$(PYTHON) -m twine
@@ -14,24 +14,22 @@ PYTEST_FLAGS = --verbose --mocha
 COVERAGE_DIR = bare_estate/
 
 dist:
-	if test -d dist; then \
-		mkdir dist; \
-	fi
+	mkdir dist
 
 build:
 	$(BUILD) $(BUILD_FLAGS)
 
-check: dist
+check: | dist
 	$(TWINE) check dist/*
 
 publish: build
 	$(TWINE) upload dist/*
 
-clean: dist
+clean: | dist
 	rm -rf dist/*
 
 install:
-	$(MAKE) $(VENV)
+	$(MAKE) --always-make --no-print-directory $(VENV)
 
 $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then $(PYTHON) -m venv $(VENV); fi
@@ -44,8 +42,8 @@ test: $(VENV)
 
 coverage: $(VENV)
 	FLAGS="--cov=$(COVERAGE_DIR)"; \
-	$(MAKE) test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
+	$(MAKE) --no-print-directory test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
 
 .PHONY: build check publish clean install test coverage
 
-.SILENT: dist build check publish install test coverage $(VENV)
+.SILENT: build check publish install test coverage $(VENV)
