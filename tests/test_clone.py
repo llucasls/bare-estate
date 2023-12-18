@@ -1,8 +1,8 @@
 import os
-import sys
 import tempfile as tmp
 import subprocess as sp
 import tarfile
+from sys import executable as python
 
 from bare_estate.commands import clone
 
@@ -42,7 +42,7 @@ class TestGitClone:
 
             env = self._get_env(tmp_dir)
 
-            proc = sp.run([ESTATE, "clone", dotfiles_repo], env=env,
+            proc = sp.run([python, ESTATE, "clone", dotfiles_repo], env=env,
                           stdout=sp.PIPE, stderr=sp.PIPE)
 
             files = set(os.listdir(tmp_dir))

@@ -1,6 +1,7 @@
 import os
 import tempfile as tmp
 import subprocess as sp
+from sys import executable as python
 
 
 ESTATE = os.path.join(os.getcwd(), "estate")
@@ -23,10 +24,10 @@ class TestGitInit:
 
             env = self._get_env(tmp_dir)
 
-            init_process = sp.run([ESTATE, "init"], env=env, stdout=sp.PIPE,
-                                  stderr=sp.PIPE)
+            init_process = sp.run([python, ESTATE, "init"], env=env,
+                                  stdout=sp.PIPE, stderr=sp.PIPE)
 
-            status_process = sp.run([ESTATE, "status"], env=env,
+            status_process = sp.run([python, ESTATE, "status"], env=env,
                                     stdout=sp.PIPE, stderr=sp.PIPE)
 
             files = set(os.listdir(tmp_dir))
