@@ -22,6 +22,11 @@ def main():
         command = cmd.cli_args[0]
         status = commands_dict[command]()
 
+    except cmd.CommandNotFoundError as err:
+        msg = "%s: %s" % (err.strerror, err.filename)
+        cmd.log_err(msg)
+        status = 5
+
     except FileNotFoundError:
         cmd.log_err("Error: the repository has not been initialized yet.")
         cmd.log_err("You can create a new repository using the command:\n")

@@ -26,6 +26,7 @@ class TestGitClone:
         "should return status 0 when no error occurs"
 
         mocker.patch("bare_estate.commands.cli_args")
+        mocker.patch("shutil.which")
         mock_run = mocker.patch("subprocess.run")
         mock_run().returncode = 0
 

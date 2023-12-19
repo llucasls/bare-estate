@@ -3,11 +3,16 @@ import sys
 import subprocess as sp
 import errno
 import tempfile
+import shutil
 
 from bare_estate.config import configs
 
 
 class NotARepositoryError(NotADirectoryError):
+    pass
+
+
+class CommandNotFoundError(FileNotFoundError):
     pass
 
 
@@ -62,6 +67,9 @@ def history_dir_exists():
 
 
 def init():
+    if shutil.which("git") is None:
+        raise CommandNotFoundError(5, "Command not found", "git")
+
     init_cmd = ["git", "init", "--bare", configs["history_location"]]
     config_cmd = [*bare_cmd, "config", "status.showUntrackedFiles", "no"]
 
@@ -72,6 +80,9 @@ def init():
 
 
 def clone():
+    if shutil.which("git") is None:
+        raise CommandNotFoundError(5, "Command not found", "git")
+
     status = 1
     repository = cli_args[1]
 
@@ -101,6 +112,9 @@ def clone():
 
 
 def forget():
+    if shutil.which("git") is None:
+        raise CommandNotFoundError(5, "Command not found", "git")
+
     history_dir_exists()
     files = sys.argv[2:]
     status = sp.run([*bare_cmd, "rm", "--cached", *files]).returncode
@@ -109,6 +123,9 @@ def forget():
 
 
 def git():
+    if shutil.which("git") is None:
+        raise CommandNotFoundError(5, "Command not found", "git")
+
     history_dir_exists()
 
     status = sp.run([*bare_cmd, *cli_args]).returncode
