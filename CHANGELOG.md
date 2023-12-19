@@ -1,3 +1,14 @@
+## 0.5.0 - 2023-12-19
+
+### Added
+
+- Checks if the `git` executable is available in the user's PATH.
+
+### Fixed
+
+- Removes dependency on the `rsync` executable. Bare Estate now uses the
+standard library for copying files when cloning a remote repository.
+
 ## 0.4.0 - 2023-06-25
 
 ### Added
