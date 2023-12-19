@@ -27,6 +27,7 @@ class TestGitClone:
 
         mocker.patch("bare_estate.commands.cli_args")
         mocker.patch("shutil.which")
+        mocker.patch("shutil.copytree")
         mock_run = mocker.patch("subprocess.run")
         mock_run().returncode = 0
 
