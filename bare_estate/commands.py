@@ -94,18 +94,14 @@ def clone():
                      repository,
                      f"{tmp_dir}/dotfiles"]
 
-        rsync_cmd = ["rsync",
-                     "--recursive",
-                     "--verbose",
-                     "--exclude",
-                     ".git",
-                     f"{tmp_dir}/dotfiles/",
-                     f"{configs['base_directory']}/"]
-
         config_cmd = [*bare_cmd, "config", "status.showUntrackedFiles", "no"]
 
         status = sp.run(clone_cmd).returncode
-        status += sp.run(rsync_cmd).returncode
+
+        shutil.copytree(f"{tmp_dir}/dotfiles", f"{configs['base_directory']}",
+                        ignore=shutil.ignore_patterns(".git"),
+                        dirs_exist_ok=True)
+
         status += sp.run(config_cmd).returncode
 
     return status

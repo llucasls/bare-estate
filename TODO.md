@@ -1,2 +1,1 @@
-- make the application work without the `rsync` binary.
 - make the application work without the `git` binary.
