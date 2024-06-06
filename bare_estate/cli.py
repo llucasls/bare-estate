@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict
 
+from bare_estate import __version__
+
 try:
     import bare_estate.commands as cmd
 except ImportError:
@@ -10,7 +12,7 @@ except ImportError:
 commands_dict = {
     "init": cmd.init,
     "clone": cmd.clone,
-    "forget": cmd.forget
+    "forget": cmd.forget,
 }
 commands_dict = defaultdict(lambda: cmd.git, commands_dict)
 
@@ -20,6 +22,10 @@ def main():
 
     try:
         command = cmd.cli_args[0]
+        if command in ["-v", "--version"]:
+            print(__version__)
+            return 0
+
         status = commands_dict[command]()
 
     except FileNotFoundError:
