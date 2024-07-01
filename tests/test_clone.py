@@ -1,53 +1,60 @@
-import os
-import tempfile as tmp
-import subprocess as sp
-import tarfile
-from sys import executable as python
-
-from bare_estate.commands import clone
+from bare_estate.commands import Command
+from bare_estate.config import Configs
 
 
-ESTATE = os.path.join(os.getcwd(), "estate")
-HOME = os.environ["HOME"]
-TARBALL_PATH = "tests/mocks/dotfiles.tar.gz"
+class TestEstateClone:
+    """Test estate clone command"""
 
+    def test_clone(self):
+        """clone repository"""
 
-class TestGitClone:
-    "Test estate clone command"
+        configs = Configs.from_dict({
+            "base_dir": "/home/john",
+            "git_dir": ".local/share/bare_estate",
+        })
+        command = Command(configs)
 
-    def _get_env(self, base_dir):
-        return {
-            **os.environ,
-            "BARE_ESTATE_HISTORY_LOCATION": os.path.join(base_dir, "dotfiles"),
-            "BARE_ESTATE_BASE_DIRECTORY": base_dir,
-        }
+        action = command.parse_shell_cmd
+        name = "emacs"
+        url = "git@github.com:johndoe/emacs-config.git"
+        work_tree = ".emacs.d"
+        argv = ["clone", name, url, work_tree]
+        env = {"HOME": "/home/john"}
 
-    def test_clone_status(self, mocker):
-        "should return status 0 when no error occurs"
+        commands = list(command.clone(action, argv, env))
 
-        mocker.patch("bare_estate.commands.cli_args")
-        mocker.patch("shutil.which")
-        mocker.patch("shutil.copytree")
-        mock_run = mocker.patch("subprocess.run")
-        mock_run().returncode = 0
+        assert commands[0] == [
+            "git",
+            "-C",
+            "/home/john",
+            "clone",
+            "--separate-git-dir=.local/share/bare_estate/emacs",
+            "git@github.com:johndoe/emacs-config.git",
+            ".emacs.d",
+        ]
 
-        assert clone() == 0
+    def test_clone_at_home(self):
+        """clone repository into home directory"""
 
-    def test_clone_repository(self):
-        "should create a bare repository with the same files from a remote repo"
+        configs = Configs.from_dict({
+            "base_dir": "/home/john",
+            "git_dir": ".local/share/bare_estate",
+        })
+        command = Command(configs)
 
-        with tmp.TemporaryDirectory(dir=os.getcwd()) as tmp_dir:
-            with tarfile.open(TARBALL_PATH, mode="r:gz") as tar:
-                tar.extractall(path=tmp_dir)
+        action = command.parse_shell_cmd
+        name = "bashrc"
+        url = "git@github.com:johndoe/bashrc.git"
+        argv = ["clone", name, url]
+        env = {"HOME": "/home/john"}
 
-            dotfiles_repo = os.path.join(tmp_dir, "dotfiles_repo")
+        commands = list(command.clone(action, argv, env=env))
 
-            env = self._get_env(tmp_dir)
-
-            proc = sp.run([python, ESTATE, "clone", dotfiles_repo], env=env,
-                          stdout=sp.PIPE, stderr=sp.PIPE)
-
-            files = set(os.listdir(tmp_dir))
-
-            assert proc.returncode == 0
-            assert files == {"dotfiles", "dotfiles_repo", ".profile"}
+        assert commands[0] == [
+            "git",
+            "-C",
+            "/home/john",
+            "clone",
+            "--separate-git-dir=.local/share/bare_estate/bashrc",
+            "git@github.com:johndoe/bashrc.git",
+        ]
