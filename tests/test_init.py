@@ -1,37 +1,83 @@
-import os
-import tempfile as tmp
-import subprocess as sp
-from sys import executable as python
+from bare_estate.commands import Command
+from bare_estate.config import Configs
 
 
-ESTATE = os.path.join(os.getcwd(), "estate")
+class TestEstateInit:
+    """Test estate init command"""
 
+    def test_create_without_work_tree(self):
+        """create repo without specifying work tree"""
 
-class TestGitInit:
-    "Test estate init command"
+        configs = Configs.from_dict({
+            "base_dir": "/home/john",
+            "git_dir": ".local/share/bare_estate",
+        })
+        command = Command(configs)
+        action = command.parse_shell_cmd
+        argv = ["init", "scripts"]
+        env = {"HOME": "/home/john"}
 
-    def _get_env(self, base_dir):
-        return {
-            **os.environ,
-            "BARE_ESTATE_HISTORY_LOCATION": os.path.join(base_dir, "dotfiles"),
-            "BARE_ESTATE_BASE_DIRECTORY": base_dir,
-        }
+        commands = list(command.init(action, argv, env))
+        return
 
-    def test_initialize_repository(self):
-        "should create a new bare repository"
+        assert commands[0] == [
+            "git",
+            "-C",
+            "/home/john",
+            "--git-dir=.local/share/bare_estate/scripts",
+            "init",
+        ]
 
-        with tmp.TemporaryDirectory(dir=os.getcwd()) as tmp_dir:
+        assert commands[1] == [
+            "git",
+            "-C",
+            "/home/john",
+            "--git-dir=.local/share/bare_estate/scripts",
+            "config",
+            "core.bare",
+            "false",
+        ]
 
-            env = self._get_env(tmp_dir)
+        assert commands[2] == [
+            "git",
+            "-C",
+            "/home/john",
+            "--git-dir=.local/share/bare_estate/scripts",
+            "config",
+            "status.showUntrackedFiles",
+            "no",
+        ]
 
-            init_process = sp.run([python, ESTATE, "init"], env=env,
-                                  stdout=sp.PIPE, stderr=sp.PIPE)
+    def test_create_with_work_tree(self):
+        """create repo with a custom work tree"""
 
-            status_process = sp.run([python, ESTATE, "status"], env=env,
-                                    stdout=sp.PIPE, stderr=sp.PIPE)
+        configs = Configs.from_dict({
+            "base_dir": "/home/john",
+            "git_dir": ".local/share/bare_estate",
+            "work_tree": ".config/nvim",
+        })
+        command = Command(configs)
+        action = command.parse_shell_cmd
+        argv = ["init", "neovim"]
+        env = {"HOME": "/home/john"}
 
-            files = set(os.listdir(tmp_dir))
+        commands = list(command.init(action, argv, env))
 
-            assert init_process.returncode == 0
-            assert status_process.returncode == 0
-            assert files == {"dotfiles"}
+        assert commands[0] == [
+            "git",
+            "-C",
+            "/home/john",
+            "init",
+            "--separate-git-dir=.local/share/bare_estate/neovim",
+            ".config/nvim",
+        ]
+
+        assert commands[1] == [
+            "git",
+            "-C",
+            "/home/john",
+            "--git-dir=.local/share/bare_estate/neovim",
+            "config",
+            "status.showUntrackedFiles",
+            "all",
+        ]
