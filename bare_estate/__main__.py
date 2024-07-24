@@ -1,6 +1,6 @@
 import sys
 
-from bare_estate.cli import main
+from .cli import main
 
 
 sys.argv[0] = "estate"
