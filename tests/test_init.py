@@ -9,8 +9,10 @@ class TestEstateInit:
         """create repo without specifying work tree"""
 
         configs = Configs.from_dict({
-            "base_dir": "/home/john",
-            "git_dir": ".local/share/bare_estate",
+            "config": {
+                "base_dir": "/home/john",
+                "git_dir": ".local/share/bare_estate",
+            }
         })
         command = Command(configs)
         action = command.parse_shell_cmd
@@ -52,13 +54,19 @@ class TestEstateInit:
         """create repo with a custom work tree"""
 
         configs = Configs.from_dict({
-            "base_dir": "/home/john",
-            "git_dir": ".local/share/bare_estate",
-            "work_tree": ".config/nvim",
+            "config": {
+                "base_dir": "/home/john",
+                "git_dir": ".local/share/bare_estate",
+            },
+            "repo": [
+                {
+                    "name": "neovim"
+                }
+            ]
         })
         command = Command(configs)
         action = command.parse_shell_cmd
-        argv = ["init", "neovim"]
+        argv = ["init", "neovim", ".config/nvim"]
         env = {"HOME": "/home/john"}
 
         commands = list(command.init(action, argv, env))

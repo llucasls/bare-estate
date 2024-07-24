@@ -6,11 +6,13 @@ class TestEstateClone:
     """Test estate clone command"""
 
     def test_clone(self):
-        """clone repository"""
+        """clone repository with a custom work tree path"""
 
         configs = Configs.from_dict({
-            "base_dir": "/home/john",
-            "git_dir": ".local/share/bare_estate",
+            "config": {
+                "base_dir": "/home/john",
+                "git_dir": ".local/share/bare_estate",
+            }
         })
         command = Command(configs)
 
@@ -18,7 +20,7 @@ class TestEstateClone:
         name = "emacs"
         url = "git@github.com:johndoe/emacs-config.git"
         work_tree = ".emacs.d"
-        argv = ["clone", name, url, work_tree]
+        argv = ["clone", "-r", name, url, work_tree]
         env = {"HOME": "/home/john"}
 
         commands = list(command.clone(action, argv, env))
@@ -37,15 +39,17 @@ class TestEstateClone:
         """clone repository into home directory"""
 
         configs = Configs.from_dict({
-            "base_dir": "/home/john",
-            "git_dir": ".local/share/bare_estate",
+            "config": {
+                "base_dir": "/home/john",
+                "git_dir": ".local/share/bare_estate",
+            }
         })
         command = Command(configs)
 
         action = command.parse_shell_cmd
         name = "bashrc"
         url = "git@github.com:johndoe/bashrc.git"
-        argv = ["clone", name, url]
+        argv = ["clone", url]
         env = {"HOME": "/home/john"}
 
         commands = list(command.clone(action, argv, env=env))
