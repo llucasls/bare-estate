@@ -17,7 +17,7 @@ COVERAGE_DIR = bare_estate/
 dist:
 	mkdir dist
 
-build:
+build: $(VENV)
 	$(BUILD) $(BUILD_FLAGS)
 
 check: | dist

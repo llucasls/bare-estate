@@ -18,7 +18,7 @@ dist:
 		mkdir dist; \
 	fi
 
-build:
+build: $(VENV)
 	$(BUILD) $(BUILD_FLAGS)
 
 check: dist
