@@ -1,3 +1,11 @@
+## 0.6.0 - 2024-07-26
+
+### Added
+
+- Revamped repository management: This update replaces the previous single
+bare repository approach with support for multiple non-bare repositories to
+manage dotfiles.
+
 ## 0.5.0 - 2023-12-19
 
 ### Added

@@ -6,24 +6,27 @@ build-backend = "hatchling.build"
 exclude = [
     "tests/",
     "Makefile",
+    "GNUmakefile",
     "dev_requirements.txt",
     ".?*",
-    "estate",
 ]
 
 [project]
 name = "bare_estate"
-version = "0.5"
+version = "0.6"
 authors = [
     { name="Lucas L. S. Haine", email="lucaslshaine@gmail.com" },
 ]
-description = "Manage your dotfiles seamlessly with a bare repo"
+description = "Manage your dotfiles seamlessly"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX",
+]
+dependencies = [
+    "toml",
 ]
 
 [project.scripts]
