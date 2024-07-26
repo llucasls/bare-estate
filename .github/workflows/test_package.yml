@@ -17,4 +17,4 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Test package
-        run: make -f actions.mk test
+        run: make test
