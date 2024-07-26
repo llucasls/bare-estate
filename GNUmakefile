@@ -8,6 +8,7 @@ PIP    = $(VENV)/bin/$(PYTHON) -m pip
 PYTEST = $(VENV)/bin/$(PYTHON) -m pytest
 
 BUMP   = $(VENV)/bin/bumpline
+MYPY   = $(VENV)/bin/mypy
 
 PYTEST_FLAGS = --verbose --mocha
 
@@ -30,6 +31,7 @@ clean: | dist
 
 install:
 	$(MAKE) --always-make --no-print-directory $(VENV)
+	$(MYPY) --install-types
 
 $(VENV): dev_requirements.txt
 	if test ! -d $(VENV); then $(PYTHON) -m venv $(VENV); fi
@@ -44,6 +46,9 @@ coverage: $(VENV)
 	FLAGS="--cov=$(COVERAGE_DIR)"; \
 	$(MAKE) --no-print-directory test PYTEST_FLAGS="$${FLAGS}" 2> /dev/null
 
-.PHONY: build check publish clean install test coverage
+typecheck:
+	$(MYPY) bare_estate/
 
-.SILENT: build check publish install test coverage $(VENV)
+.PHONY: build check publish clean install test coverage typecheck
+
+.SILENT: build check publish install test coverage typecheck $(VENV)
