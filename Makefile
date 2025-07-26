@@ -14,9 +14,7 @@ PYTEST_FLAGS = --verbose --mocha
 COVERAGE_DIR = bare_estate/
 
 dist:
-	if test -d dist; then \
-		mkdir dist; \
-	fi
+	if ! test -d dist; then mkdir dist; fi
 
 build: $(VENV)
 	$(BUILD) $(BUILD_FLAGS)
